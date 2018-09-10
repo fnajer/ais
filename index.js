@@ -28,7 +28,14 @@ let hours = 0;
 teachers.forEach(teacher => {
   hours += teacher.hours
 });
-console.log(splitTeachersByPair(teachers));
+
+const teachersByPair = splitTeachersByPair(teachers);
+teachersByPair.sort(randomSort);
+console.log(teachersByPair);
+
+function randomSort(a, b) {
+  return Math.random() - 0.5;
+}
 
 function splitTeachersByPair(teachers) {
   let splittedTeachers = [];
