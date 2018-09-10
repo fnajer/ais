@@ -51,8 +51,9 @@ generateSchedule(teachers);
 function generateSchedule(teachers) {
   const teachersByPair = splitTeachersByPair(teachers);
   teachersByPair.sort(randomSort);
-
+  console.log(teachersByPair);
   const schedule = spreadByDay(teachersByPair, hours / 2);
+  
   showSchedule(schedule);
 }
 
@@ -67,11 +68,14 @@ function showSchedule(schedule) {
 
 function spreadByDay(teachersByPair, pairs) {
   const averagePairsOnDay = pairs / days.length;
-
-  for(let i = 0; i < days.length; i++) {
+  console.log(teachersByPair);
+  for(let i = 0; i < days.length; i++) {console.log(days[i].title);
     for(let j = 0; j < averagePairsOnDay; j++) {
       const onePair = {...teachersByPair[j]};
-      days[i].pairs.push(onePair);
+      teachersByPair = teachersByPair.filter(pair => pair !== teachersByPair[j]);
+      //teachersByPair.shift();
+      
+      days[i].pairs.push(onePair);console.log(days[i].pairs[j]);
     }
   }
 
