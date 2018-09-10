@@ -25,5 +25,31 @@ const teachers = [{
 }];
 
 let hours = 0;
-teachers.forEach(teacher => hours += teacher.hours);
-console.log(hours);
+teachers.forEach(teacher => {
+  hours += teacher.hours
+});
+console.log(splitTeachersByPair(teachers));
+
+function splitTeachersByPair(teachers) {
+  let splittedTeachers = [];
+
+  for (let i = 0; i < teachers.length; i++) {
+    const splittedTeacher = splitTeacher(teachers[i]);
+    splittedTeachers = splittedTeachers.concat(splittedTeacher);
+  }
+
+  return splittedTeachers;
+}
+
+function splitTeacher(teacher) {
+  const splittedTeacher = [];
+  const pairs = teacher.hours / 2;
+
+  for (let i = 0; i < pairs; i++) {
+    const onePair = {...teacher, hours: 2};
+    splittedTeacher.push(onePair);
+  }
+
+  return splittedTeacher;
+};
+
