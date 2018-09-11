@@ -51,9 +51,8 @@ generateSchedule(teachers);
 function generateSchedule(teachers) {
   const teachersByPair = splitTeachersByPair(teachers);
   teachersByPair.sort(randomSort);
-  console.log(teachersByPair);
+
   const schedule = spreadByDay(teachersByPair, hours / 2);
-  
   showSchedule(schedule);
 }
 
@@ -68,13 +67,10 @@ function showSchedule(schedule) {
 
 function spreadByDay(teachersByPair, pairs) {
   const averagePairsOnDay = pairs / days.length;
-  console.log('        ' + teachersByPair[19].name);
-  debugger;
+
   for(let i = 0, k = 0; i < days.length; i++) {
     for(let j = 0; j < averagePairsOnDay; j++, k++) {
       const onePair = {...teachersByPair[k]};
-      //teachersByPair = teachersByPair.filter(pair => pair !== teachersByPair[j]);
-      //teachersByPair.shift();
       
       days[i].pairs.push(onePair);
     }
@@ -110,3 +106,29 @@ function splitTeacher(teacher) {
   return splittedTeacher;
 };
 
+function findRepeatPairs(arr) {
+  let uniqueArr = unique(arr);
+  let repeatedValues = uniqueArr.map(elem => {
+    return {name: elem, repeat: 0}
+  });
+  for (let i = 0; i < repeatedValues.length; i++) {
+      for (let j = 0; j < arr.length; j++) {
+        if(arr[i].name === arr[j].name) {
+            repeatedValues[i].repeat = repeatedValues[i].repeat + 1;
+          }
+      }
+  }
+  repeatedValues = repeatedValues.filter(elem => elem.repeat > 1);
+  return repeatedValues;
+}
+
+function unique(arr) {
+  var obj = {};
+
+  for (var i = 0; i < arr.length; i++) {
+    var str = arr[i].name;
+    obj[str] = true;
+  }
+
+  return Object.keys(obj);
+}
