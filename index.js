@@ -68,14 +68,15 @@ function showSchedule(schedule) {
 
 function spreadByDay(teachersByPair, pairs) {
   const averagePairsOnDay = pairs / days.length;
-  console.log(teachersByPair);
-  for(let i = 0; i < days.length; i++) {console.log(days[i].title);
-    for(let j = 0; j < averagePairsOnDay; j++) {
-      const onePair = {...teachersByPair[j]};
-      teachersByPair = teachersByPair.filter(pair => pair !== teachersByPair[j]);
+  console.log('        ' + teachersByPair[19].name);
+  debugger;
+  for(let i = 0, k = 0; i < days.length; i++) {
+    for(let j = 0; j < averagePairsOnDay; j++, k++) {
+      const onePair = {...teachersByPair[k]};
+      //teachersByPair = teachersByPair.filter(pair => pair !== teachersByPair[j]);
       //teachersByPair.shift();
       
-      days[i].pairs.push(onePair);console.log(days[i].pairs[j]);
+      days[i].pairs.push(onePair);
     }
   }
 
