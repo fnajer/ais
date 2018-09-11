@@ -52,7 +52,8 @@ function generateSchedule(teachers) {
   const teachersByPair = splitTeachersByPair(teachers);
   teachersByPair.sort(randomSort);
 
-  const schedule = spreadByDay(teachersByPair, hours / 2);
+  const schedule = spreadByDay(teachersByPair, hours / 2, true);
+  combineRelatedPairs(schedule);
   showSchedule(schedule);
 }
 
@@ -65,10 +66,19 @@ function showSchedule(schedule) {
   }
 }
 
-function spreadByDay(teachersByPair, pairs) {
+function combineRelatedPairs(teachersByPair) {
+
+}
+
+function spreadByDay(teachersByPair, pairs, pairsIsCloser = false) {
   const averagePairsOnDay = pairs / days.length;
 
   for(let i = 0, k = 0; i < days.length; i++) {
+
+    // if(pairsIsCloser) {
+    //   combineRelatedPairs(teachersByPair[k]);
+    // }
+
     for(let j = 0; j < averagePairsOnDay; j++, k++) {
       const onePair = {...teachersByPair[k]};
       
@@ -105,6 +115,24 @@ function splitTeacher(teacher) {
 
   return splittedTeacher;
 };
+
+function deleteRepeatPairs(arr, repeatedValues) {
+  let firstValueIndex = null;
+  for (let i = 0; i < repeatedValues.length; i++) {
+    for(let j = 0; j < arr.length; j++) {
+      console.log(repeatedValues[i].name + ' ' + arr[j].name);
+        if (repeatedValues[i].name == arr[j].name) {
+            if(firstValueIndex === null) {
+              firstValueIndex = j; // пригодится потом возможно, это первое значение повторяющееся
+                  continue; // мы кстати никак не завязаны на repeat - это может минус(а вдруг лучше удалять не все повторы, а именно по подсчету), а может и плюс(без него можно)
+            }
+              let deletedElem = arr.splice(j, 1);
+              arr.splice(firstValueIndex, 0, deletedElem[0]);
+          }
+      }
+      firstValueIndex = null;
+  }
+}
 
 function findRepeatPairs(arr) {
   let uniqueArr = unique(arr);
