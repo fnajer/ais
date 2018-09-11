@@ -53,21 +53,26 @@ function generateSchedule(teachers) {
   teachersByPair.sort(randomSort);
 
   const schedule = spreadByDay(teachersByPair, hours / 2, true);
+  showSchedule(schedule);
   combineRelatedPairs(schedule);
   showSchedule(schedule);
+  debugger;
 }
 
 function showSchedule(schedule) {
-  for(let i = 0; i < schedule.length; i++) {
+  for (let i = 0; i < schedule.length; i++) {
     console.log(schedule[i].title);
-    for(let j = 0; j < schedule[i].pairs.length; j++) {
+    for (let j = 0; j < schedule[i].pairs.length; j++) {
       console.log(schedule[i].pairs[j]);
     }
   }
 }
 
-function combineRelatedPairs(teachersByPair) {
-
+function combineRelatedPairs(schedule) {
+  for (let i = 0; i < schedule.length; i++) {
+    const repeatingPairs = findRepeatPairs(schedule[i].pairs);
+    deleteRepeatPairs(schedule[i].pairs, repeatingPairs);
+  }
 }
 
 function spreadByDay(teachersByPair, pairs, pairsIsCloser = false) {
@@ -120,7 +125,6 @@ function deleteRepeatPairs(arr, repeatedValues) {
   let firstValueIndex = null;
   for (let i = 0; i < repeatedValues.length; i++) {
     for(let j = 0; j < arr.length; j++) {
-      console.log(repeatedValues[i].name + ' ' + arr[j].name);
         if (repeatedValues[i].name == arr[j].name) {
             if(firstValueIndex === null) {
               firstValueIndex = j; // пригодится потом возможно, это первое значение повторяющееся
